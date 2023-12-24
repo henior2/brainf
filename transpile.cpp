@@ -20,31 +20,31 @@ int transpile(char* input_file, char* output_file)
 	char c;
 	int parentheses = 0;
 
-	output_s += "#include <stdio.h>\nint main(){char a[30000];char*p=a;";
+	output_s += "#include <stdio.h>\n#define A putchar(*p);\n#define B *p=getchar();\n#define C if(p<a+30000) ++p; else p=a;\n#define D if(p>a) --p; else p=a+30000;\n#define E ++*p;\n#define F --*p;\n#define G while(*p)\nint main(){char a[30000];char*p=a;";
 	while (input.get(c))
 	{
 		switch (c)
 		{
 		case '>':
-			output_s += "if(p<a+30000) ++p; else p=a;";
+			output_s += "C ";
 			break;
 		case '<':
-			output_s += "if(p>a) --p; else p=a+30000;";
+			output_s += "D ";
 			break;
 		case '+':
-			output_s += "++*p;";
+			output_s += "E ";
 			break;
 		case '-':
-			output_s += "--*p;";
+			output_s += "F ";
 			break;
 		case '.':
-			output_s += "putchar(*p);";
+			output_s += "A ";
 			break;
 		case ',':
-			output_s += "*p=getchar();";
+			output_s += "B ";
 			break;
 		case '[':
-			output_s += "while(*p){";
+			output_s += "G{";
 			parentheses++;
 			break;
 		case ']':
