@@ -1,0 +1,5 @@
+bin/
+scripts/
+*.out
+*.o
+.vscode/
